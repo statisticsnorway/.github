@@ -1,0 +1,7 @@
+{
+    "name": "Docker build and push",
+    "description": "Build a Docker image and push Artifact Registry",
+    "iconName": "octicon package-dependencies",
+    "categories": ["Continuous integration"],
+    "labels": ["preview"]
+}
