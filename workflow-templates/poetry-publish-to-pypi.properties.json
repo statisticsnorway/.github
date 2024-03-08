@@ -1,0 +1,6 @@
+{
+    "name": "Poetry test and publish to PyPI",
+    "description": "Test a Poetry environment and publish to PyPI",
+    "iconName": "octicon rocket",
+    "categories": ["Continuous delivery"]
+}
