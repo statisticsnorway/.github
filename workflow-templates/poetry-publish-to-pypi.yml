@@ -24,8 +24,7 @@ name: Publish to PyPI
 
 on:
   push:
-    branches:
-      - master
+    branches: [ $default-branch ]
 
 env:
   ENVIRONMENT_NAME: # TODO: set this to your environment name
