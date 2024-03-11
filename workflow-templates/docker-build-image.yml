@@ -63,6 +63,7 @@ jobs:
         tags: |
           type=raw,value=master-{{sha}}
           type=raw,value=latest
+          type=raw,value={{branch}}-{{date 'YYYYMMDDHHmmss'}}
 
     - name: Build and push docker image to Artifact Registry
       uses: docker/build-push-action@v5
