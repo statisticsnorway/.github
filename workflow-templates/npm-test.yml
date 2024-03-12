@@ -1,0 +1,40 @@
+# This workflow will run tests using node and npm
+#
+# Overview:
+# 1. Set up Node and NPM
+# 2. Install dependencies
+# 3. Run tests
+#
+# To configure this workflow change the node version to your preferred version.
+
+name: Run Tests on PR
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+env:
+  NODE_VERSION: # TODO: set this to your preferred node version
+
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        npm install
+
+    - name: Run tests
+      run: npm test -- --watchAll=false 

@@ -1,0 +1,6 @@
+{
+    "name": "Test with npm",
+    "description": "Test with npm",
+    "iconName": "octicon beaker",
+    "categories": ["Continuous integration"]
+}
