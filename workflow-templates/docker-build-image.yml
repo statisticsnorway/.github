@@ -61,7 +61,7 @@ jobs:
       with:
         images: ${{ env.REGISTRY }}/${{ env.TEAM_NAME }}-docker/${{ env.IMAGE_NAME }}
         tags: |
-          type=raw,value=master-{{sha}}
+          type=raw,value={{branch}}-{{sha}}
           type=raw,value=latest
           type=raw,value={{branch}}-{{date 'YYYYMMDDHHmmss'}}
 
