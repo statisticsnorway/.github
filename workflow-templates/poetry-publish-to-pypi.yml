@@ -1,0 +1,79 @@
+# This workdlow will test and publish to PyPI
+#
+# Note:
+# If you are [ssb-pypitemplate](https://github.com/statisticsnorway/ssb-pypitemplate) You already have workflows included in your project.
+#
+# Before you use this workflow:
+# 1. Create a PyPI account, and create a token for publishing to PyPI.
+# 2. In your github repository, go to Settings > Code and automation > Environments
+#    and create a new environment.
+# 3. Add the username and token from PyPI as secrets in the new environment called PYPI_USER and PYPI_TOKEN
+# 4. Protect the environment with protection rules.
+#
+# Overview:
+# 1. Set up Python
+# 2. Install dependencies
+# 3. Run tests
+# 4. Publish to PyPI
+#
+# To configure this workflow:
+# 1. change the python-version to a list of your preferred versions
+# 2. change the environment name to the one you created
+
+name: Publish to PyPI
+
+on:
+  push:
+    branches: [ $default-branch ]
+
+env:
+  ENVIRONMENT_NAME: # TODO: set this to your environment name
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: # TODO: set this to your preferred versions
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        curl -sSL https://install.python-poetry.org | python -
+        poetry install
+
+    - name: Run tests
+      id: test
+      run: poetry run pytest
+
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    environment: ${{ env.ENVIRONMENT_NAME }}
+    needs: test
+    if: success()
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.12
+
+    - name: Install dependencies
+      run: |
+        curl -sSL https://install.python-poetry.org | python -
+        poetry install
+
+    - name: Build and publish
+      run: poetry publish --build --username ${{ secrets.PYPI_USER }} --password ${{ secrets.PYPI_TOKEN }}

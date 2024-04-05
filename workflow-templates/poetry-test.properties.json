@@ -1,0 +1,6 @@
+{
+    "name": "Test with pytest",
+    "description": "Test a Poetry environment with pytest",
+    "iconName": "octicon beaker",
+    "categories": ["Continuous integration"]
+}

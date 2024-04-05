@@ -1,0 +1,46 @@
+# This workflow will run tests using poetry
+#
+# Note:
+# If you are [ssb-pypitemplate](https://github.com/statisticsnorway/ssb-pypitemplate) You already have workflows included in your project.
+#
+# To use pytest-cov to report on test coverage add the following to your Pytest command:
+# --cov=<project_name>
+#
+# Overview:
+# 1. Install poetry
+# 2. Install dependencies
+# 3. Run tests
+#
+# To configure this workflow change the python version to your preferred version.
+
+name: Run Tests on PR
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+env:
+  PYTHON_VERSION:  # TODO: set this to your preferred python version
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+
+    - name: Install dependencies
+      run: |
+        curl -sSL https://install.python-poetry.org | python -
+        poetry install
+
+    - name: Run tests
+      run: poetry run pytest
