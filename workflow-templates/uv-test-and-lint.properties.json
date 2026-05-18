@@ -1,0 +1,6 @@
+{
+    "name": "uv: test and lint",
+    "description": "Run tests and lint through uv and ruff",
+    "iconName": "octicon beaker",
+    "categories": ["Continuous integration"]
+}
