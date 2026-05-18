@@ -1,0 +1,47 @@
+# This workflow will run tests and lints using uv and ruff
+#
+# Overview:
+# 1. Install uv
+# 2. Install dependencies
+# 3. Run tests
+#
+# To configure this workflow change the python version to your preferred version.
+
+name: Run Tests on PR
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+env:
+  PYTHON_VERSION:  # TODO: set this to your preferred python version
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v6
+
+    - name: Set up Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install the latest version of uv
+      uses: astral-sh/setup-uv@85856786d1ce8acfbcc2f13a5f3fbd6b938f9f41 # v7.1.2
+    
+    - name: Sync dependencies
+      run: uv sync
+
+    - name: Run tests
+      run: uv run pytest
+
+    - name: Run Ruff check
+      run: uv run ruff check --output-format=github
+
+    - name: Run Ruff format
+      run: uv run ruff format --diff
